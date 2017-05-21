@@ -5,9 +5,10 @@ package com.example.sessostar.brickbreaker;
  */
 
 public class Position {
-    float x, y;
+    public float x, y;
 
-    public Position() {
-
+    public Position(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 }

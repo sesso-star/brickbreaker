@@ -14,20 +14,18 @@ import javax.microedition.khronos.opengles.GL10;
  */
 
 public class GameRenderer implements Renderer{
-    Circle mCircle;
+    Ball ball;
 
-    private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
-    private final float[] translationMatrix = new float[16];
+    private final float[] mMVPMatrix = new float[16];
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        mCircle = new Circle(0.5f, 40);
+        ball = new Ball(0.5f);
     }
 
     public void onDrawFrame(GL10 unused) {
-        float[] scratch = new float[16];
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
@@ -37,15 +35,12 @@ public class GameRenderer implements Renderer{
                 0f, 1f, 0f);
 
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-
         long time = SystemClock.uptimeMillis() % 4000L;
-        float dx = 0.001f * ((int) time);
-        Matrix.setIdentityM(scratch, 0);
-        Matrix.translateM(translationMatrix, 0, scratch, 0, dx, 0, 0);
 
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, translationMatrix, 0);
+        ball.setPos(0.001f * ((int) time), 0);
 
-        mCircle.draw(scratch);
+
+        ball.draw(mMVPMatrix);
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
