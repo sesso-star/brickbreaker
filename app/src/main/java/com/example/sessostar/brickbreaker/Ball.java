@@ -11,11 +11,12 @@ public class Ball {
     private Circle circle;
     private Position pos;
 
+    ShaderHandler shaderHandler;
 
-    private final float[] translationMatrix = new float[16];
+    public Ball(float radius, ShaderHandler sh) {
+        shaderHandler = sh;
 
-    public Ball(float radius) {
-        circle = new Circle(radius, 40);
+        circle = new Circle(radius, 40, sh);
         pos = new Position(0, 0);
     }
 
@@ -28,15 +29,14 @@ public class Ball {
         pos.y = y;
     }
 
-    public void draw(float[] mvpMatrix) {
-        float[] scratch = new float[16];
+    public void draw() {
+        float[] translationMatrix = new float[16];
 
+        Matrix.setIdentityM(translationMatrix, 0);
+        Matrix.translateM(translationMatrix, 0, pos.x, pos.y, 0);
 
-        Matrix.setIdentityM(scratch, 0);
-        Matrix.translateM(translationMatrix, 0, scratch, 0, pos.x, pos.y, 0);
+        shaderHandler.setModelMatrix(translationMatrix);
 
-        Matrix.multiplyMM(scratch, 0, mvpMatrix, 0, translationMatrix, 0);
-
-        circle.draw(scratch);
+        circle.draw();
     }
 }

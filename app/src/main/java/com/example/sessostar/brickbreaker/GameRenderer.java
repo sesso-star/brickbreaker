@@ -1,5 +1,6 @@
 package com.example.sessostar.brickbreaker;
 
+import android.graphics.Shader;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
@@ -9,38 +10,40 @@ import android.os.SystemClock;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import static java.lang.Math.sin;
+
 /**
  * Created by user on 20/05/17.
  */
 
 public class GameRenderer implements Renderer{
     Ball ball;
+    ShaderHandler shaderHandler;
 
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
-    private final float[] mMVPMatrix = new float[16];
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        ball = new Ball(0.5f);
-    }
-
-    public void onDrawFrame(GL10 unused) {
-
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        shaderHandler = new ShaderHandler();
+        ball = new Ball(0.5f, shaderHandler);
 
         Matrix.setLookAtM(mViewMatrix, 0,
                 0f, 0f, -3f,
                 0f, 0f, 0f,
                 0f, 1f, 0f);
 
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-        long time = SystemClock.uptimeMillis() % 4000L;
+        shaderHandler.setViewMatrix(mViewMatrix);
+    }
 
-        ball.setPos(0.001f * ((int) time), 0);
+    public void onDrawFrame(GL10 unused) {
 
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        ball.draw(mMVPMatrix);
+        long time = SystemClock.uptimeMillis() % 6283;
+        ball.setPos((float)sin((float) 4 * time / 1000), 0);
+
+        ball.draw();
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
@@ -49,22 +52,10 @@ public class GameRenderer implements Renderer{
         float ratio = (float) width / height;
 
         Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 1, 10);
+        shaderHandler.setProjectionMatrix(mProjectionMatrix);
     }
 
-    /**
-     *
-     * @param type
-     * @param shaderCode
-     * @return
-     */
-    public static int loadShader(int type, String shaderCode){
-        int shader = GLES20.glCreateShader(type);
 
-        GLES20.glShaderSource(shader, shaderCode);
-        GLES20.glCompileShader(shader);
-
-        return shader;
-    }
 
 }
 
