@@ -8,32 +8,34 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 /**
- * Created by user on 20/05/17.
+ * Implements a Rectangular object
  */
 
-public class Circle {
+public class Rectangle {
     private FloatBuffer vertexBuffer;
 
     static float centerX = 0;
     static float centerY = 0;
 
-    private int vertexCount;
+    private float width;
+    private float height;
+
     private int COORDS_PER_VERTEX = 3;
 
-    float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 1.0f};
+    float color[] = {1.f, 0.31372549f, 0.31372549f, 1.0f};
 
     ShaderHandler shaderHandler;
 
     /**
-     *
-     * @param radius Circle radius
-     * @param precision number of points used to draw de circumpherence
+     * @param width Rectangle width
+     * @param height Rectangle height
      */
-    public Circle(float radius, int precision, ShaderHandler sh) {
-        vertexCount = precision;
+    public Rectangle(float width, int height, ShaderHandler sh) {
+        this.width = width;
+        this.height = height;
         shaderHandler = sh;
 
-        float[] circleCoords = new float[3 * vertexCount + 1];
+        float[] rectCoords = new float[3 * vertexCount + 1];
 
         int idx = 0;
         circleCoords[idx++] = centerX;
