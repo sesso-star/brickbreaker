@@ -18,6 +18,7 @@ import static java.lang.Math.sin;
 
 public class GameRenderer implements Renderer{
     Ball ball;
+    Ball ball2;
     ShaderHandler shaderHandler;
 
     private final float[] mProjectionMatrix = new float[16];
@@ -27,6 +28,7 @@ public class GameRenderer implements Renderer{
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         shaderHandler = new ShaderHandler();
         ball = new Ball(0.5f, shaderHandler);
+        ball2 = new Ball(0.5f, shaderHandler);
 
         Matrix.setLookAtM(mViewMatrix, 0,
                 0f, 0f, -3f,
@@ -42,8 +44,10 @@ public class GameRenderer implements Renderer{
 
         long time = SystemClock.uptimeMillis() % 6283;
         ball.setPos((float)sin((float) 4 * time / 1000), 0);
+        ball2.setPos(0, (float)sin((float) 4 * time / 1000));
 
         ball.draw();
+        ball2.draw();
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
