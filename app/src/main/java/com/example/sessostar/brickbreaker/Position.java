@@ -11,4 +11,9 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+
+    public void updatePosition(Velocity v, float dt) {
+        x += v.x * dt;
+        y += v.y * dt;
+    }
 }

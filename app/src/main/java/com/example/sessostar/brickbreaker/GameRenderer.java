@@ -19,6 +19,10 @@ import static java.lang.Math.sin;
 public class GameRenderer implements Renderer{
     Ball ball;
     Ball ball2;
+
+    float x_size;
+    float y_size;
+
     ShaderHandler shaderHandler;
 
     private final float[] mProjectionMatrix = new float[16];
@@ -39,12 +43,12 @@ public class GameRenderer implements Renderer{
     }
 
     public void onDrawFrame(GL10 unused) {
-
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         long time = SystemClock.uptimeMillis() % 6283;
         ball.setPos((float)sin((float) 4 * time / 1000), 0);
-        ball2.setPos(0, (float)sin((float) 4 * time / 1000));
+//        ball2.setPos(0, (float)sin((float) 4 * time / 1000));
+        ball2.setVelocity(50, 50);
 
         ball.draw();
         ball2.draw();
@@ -54,8 +58,9 @@ public class GameRenderer implements Renderer{
         GLES20.glViewport(0, 0, width, height);
 
         float ratio = (float) width / height;
+        Utils.ySize = Utils.xSize / ratio;
 
-        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 1, 10);
+        Matrix.frustumM(mProjectionMatrix, 0, 0, Utils.xSize, 0, Utils.ySize, 2.9f, 10);
         shaderHandler.setProjectionMatrix(mProjectionMatrix);
     }
 

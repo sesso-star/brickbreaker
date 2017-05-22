@@ -10,6 +10,7 @@ import android.os.SystemClock;
 public class Ball {
     private Circle circle;
     private Position pos;
+    private Velocity velocity;
 
     ShaderHandler shaderHandler;
 
@@ -18,6 +19,7 @@ public class Ball {
 
         circle = new Circle(radius, 40, sh);
         pos = new Position(0, 0);
+        velocity = new Velocity(0, 0);
     }
 
     public Position getPos() {
@@ -29,7 +31,18 @@ public class Ball {
         pos.y = y;
     }
 
+    public Velocity getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(float vx, float vy) {
+        velocity.x = vx;
+        velocity.y = vy;
+    }
+
     public void draw() {
+        pos.updatePosition(velocity, Utils.dt);
+
         float[] translationMatrix = new float[16];
 
         Matrix.setIdentityM(translationMatrix, 0);
