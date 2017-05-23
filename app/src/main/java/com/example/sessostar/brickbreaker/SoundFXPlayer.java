@@ -2,6 +2,9 @@ package com.example.sessostar.brickbreaker;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
+
+import java.io.IOException;
 
 /**
  * Created by gustavo on 5/23/17.
@@ -9,7 +12,7 @@ import android.media.MediaPlayer;
 
 public class SoundFXPlayer {
 
-    private class MyFXPlayer extends MediaPlayer {
+    private static class MyFXPlayer extends MediaPlayer {
         // -1 - being prepared
         // 0  - not prepared
         // 1  - prepared
@@ -32,15 +35,22 @@ public class SoundFXPlayer {
         }
     }
 
-    private static MediaPlayer ballCollision;
+    private static MyFXPlayer ballCollision;
     private static MediaPlayer gameSound;
 
     static void prepareFXes(Context context) {
-        ballCollision = new MediaPlayer();
-        ballCollision = MediaPlayer.create(context, R.raw.ball_collision_sound);
+        ballCollision = new MyFXPlayer();
+        Uri soundUri = Uri.parse("android.resource://com.example.sessostar.brickbreaker/" + R.raw.ball_collision_sound);
+        try {
+            ballCollision.setDataSource(context, soundUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ballCollision.prepareAsync();
     }
 
     static void playBallCollisionSound() {
-        ballCollision.start();
+        if (ballCollision.isPrepared())
+            ballCollision.start();
     }
 }
