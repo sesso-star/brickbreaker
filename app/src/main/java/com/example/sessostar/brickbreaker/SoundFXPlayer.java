@@ -13,44 +13,39 @@ import java.io.IOException;
 public class SoundFXPlayer {
 
     private static class MyFXPlayer extends MediaPlayer {
-        // -1 - being prepared
-        // 0  - not prepared
-        // 1  - prepared
-        private int state;
 
-        @Override
-        public void prepareAsync() {
-            super.prepareAsync();
+        public MyFXPlayer() {
+            super();
+
             super.setOnPreparedListener(new OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    state = 1;
+                    mp.start();
                 }
             });
-            state = -1;
-        }
 
-        public boolean isPrepared() {
-            return state == 1;
+            super.setOnCompletionListener(new OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();
+                }
+            });
         }
     }
 
-    private static MyFXPlayer ballCollision;
     private static MediaPlayer gameSound;
 
     static void prepareFXes(Context context) {
-        ballCollision = new MyFXPlayer();
+    }
+
+    static void playBallCollisionSound(Context context) {
+        MyFXPlayer fxPlayer = new MyFXPlayer();
         Uri soundUri = Uri.parse("android.resource://com.example.sessostar.brickbreaker/" + R.raw.ball_collision_sound);
         try {
-            ballCollision.setDataSource(context, soundUri);
+            fxPlayer.setDataSource(context, soundUri);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ballCollision.prepareAsync();
-    }
-
-    static void playBallCollisionSound() {
-        if (ballCollision.isPrepared())
-            ballCollision.start();
+        fxPlayer.prepareAsync();
     }
 }

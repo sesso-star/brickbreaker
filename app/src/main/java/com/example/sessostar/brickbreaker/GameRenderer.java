@@ -1,5 +1,6 @@
 package com.example.sessostar.brickbreaker;
 
+import android.content.Context;
 import android.graphics.Shader;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -17,6 +18,9 @@ import static java.lang.Math.sin;
  */
 
 public class GameRenderer implements Renderer{
+
+    private Context context;
+
     Ball ball;
     Ball ball2;
     Rectangle rectangle1;
@@ -25,6 +29,13 @@ public class GameRenderer implements Renderer{
 
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
+
+    /**
+     * @param context context of the activity that uses this Renderer
+     */
+    GameRenderer(Context context) {
+        this.context = context;
+    }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -51,7 +62,7 @@ public class GameRenderer implements Renderer{
         ball2.setVelocity(50, 50);
 
         if (time % 10 == 1)
-            SoundFXPlayer.playBallCollisionSound();
+            SoundFXPlayer.playBallCollisionSound(context);
 
 
         ball.draw();
