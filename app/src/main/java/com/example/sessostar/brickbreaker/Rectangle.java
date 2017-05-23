@@ -17,11 +17,7 @@ public class Rectangle {
     static float centerX = 0;
     static float centerY = 0;
 
-    private float width;
-    private float height;
-
     private int COORDS_PER_VERTEX = 3;
-
     float color[] = {1.f, 0.31372549f, 0.31372549f, 1.0f};
 
     ShaderHandler shaderHandler;
@@ -30,44 +26,45 @@ public class Rectangle {
      * @param width Rectangle width
      * @param height Rectangle height
      */
-    public Rectangle(float width, int height, ShaderHandler sh) {
-        this.width = width;
-        this.height = height;
+    public Rectangle(float width, float height, ShaderHandler sh) {
         shaderHandler = sh;
 
-        float[] rectCoords = new float[3 * vertexCount + 1];
-
         int idx = 0;
-        circleCoords[idx++] = centerX;
-        circleCoords[idx++] = centerY;
-        circleCoords[idx++] = 0.0f;
-
-        for (int i = 0; i <= vertexCount - 2; i++) {
-            float rad = ((float) i / (vertexCount - 2)) * 2 * (float)Math.PI;
-
-            circleCoords[idx++] = centerX + radius * (float)Math.cos(rad);
-            circleCoords[idx++] = centerY + radius * (float)Math.sin(rad);
-            circleCoords[idx++] = 0.0f;
-        }
+        float[] rectCoords = new float[3 * (4 + 1)];
+        rectCoords[idx++] = centerX + (-1) * (width / 2);
+        rectCoords[idx++] = centerY + (-1) * (height / 2);
+        rectCoords[idx++] = 0.0f;
+        rectCoords[idx++] = centerX + (-1) * (width / 2);
+        rectCoords[idx++] = centerY + ( 1) * (height / 2);
+        rectCoords[idx++] = 0.0f;
+        rectCoords[idx++] = centerX + ( 1) * (width / 2);
+        rectCoords[idx++] = centerY + (-1) * (height / 2);
+        rectCoords[idx++] = 0.0f;
+        rectCoords[idx++] = centerX + ( 1) * (width / 2);
+        rectCoords[idx++] = centerY + ( 1) * (height / 2);
+        rectCoords[idx++] = 0.0f;
 
         // 4 bytes per float
-        ByteBuffer bb = ByteBuffer.allocateDirect(circleCoords.length * 4);
+        ByteBuffer bb = ByteBuffer.allocateDirect(rectCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
 
         vertexBuffer = bb.asFloatBuffer();
-        vertexBuffer.put(circleCoords);
+        vertexBuffer.put(rectCoords);
         vertexBuffer.position(0);
-
     }
 
 
     public void draw() {
-        int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
+        float[] translationMatrix = new float[16];
 
+        Matrix.setIdentityM(translationMatrix, 0);
+        Matrix.translateM(translationMatrix, 0, 0, 0, 0);
+        shaderHandler.setModelMatrix(translationMatrix);
+
+
+        int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
         shaderHandler.setPosition(COORDS_PER_VERTEX, vertexStride, vertexBuffer);
         shaderHandler.setColor(color);
-//        shaderHandler.disablePositionHandle();
-
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, vertexCount);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
     }
 }
