@@ -47,6 +47,7 @@ public class GameRenderer implements Renderer{
         long time = SystemClock.uptimeMillis() % 6283;
         ball.setPos((float)sin((float) 4 * time / 1000), 0);
         ball2.setPos(0, (float)sin((float) 4 * time / 1000));
+        rectangle1.setPos((float)sin((float) 4 * time / 1000), (float)sin((float) 4 * time / 1000));
 
         ball.draw();
         ball2.draw();
