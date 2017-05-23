@@ -38,7 +38,6 @@ public class SoundFXPlayer {
     static void prepareFXes(Context context) {
         ballCollision = new MediaPlayer();
         ballCollision = MediaPlayer.create(context, R.raw.ball_collision_sound);
-        ballCollision.prepareAsync();
     }
 
     static void playBallCollisionSound() {
