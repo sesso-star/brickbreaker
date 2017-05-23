@@ -15,7 +15,7 @@ public class Quadrilateral {
     private FloatBuffer vertexBuffer;
 
     private int COORDS_PER_VERTEX = 3;
-    float color[] = {1.f, 0.31372549f, 0.31372549f, 1.0f};
+    float color[] = {1.f, 0.71372549f, 0.31372549f, 1.0f};
 
     ShaderHandler shaderHandler;
 

@@ -9,6 +9,7 @@ import android.opengl.Matrix;
 public class Rectangle {
 
     private Quadrilateral quadrilateral;
+    private Position pos;
     private ShaderHandler shaderHandler;
 
     public Rectangle(float width, float height, ShaderHandler sh) {
@@ -20,13 +21,26 @@ public class Rectangle {
         rectVertice[2] = new Position(( 1) * (width / 2), ( 1) * (height / 2));
         rectVertice[3] = new Position((-1) * (width / 2), ( 1) * (height / 2));;
         quadrilateral = new Quadrilateral(rectVertice, sh);
+
+        pos = new Position(0, 0);
+    }
+
+
+    public Position getPos() {
+        return pos;
+    }
+
+
+    public void setPos(float x, float y) {
+        pos.x = x;
+        pos.y = y;
     }
 
 
     public void draw() {
         float[] translationMatrix = new float[16];
         Matrix.setIdentityM(translationMatrix, 0);
-        Matrix.translateM(translationMatrix, 0, 0, 0, 0);
+        Matrix.translateM(translationMatrix, 0, pos.x, pos.y, 0);
         shaderHandler.setModelMatrix(translationMatrix);
 
         quadrilateral.draw();
