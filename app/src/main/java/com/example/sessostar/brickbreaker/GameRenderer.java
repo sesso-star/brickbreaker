@@ -50,6 +50,10 @@ public class GameRenderer implements Renderer{
         ball2.setPos(0, (float)sin((float) 4 * time / 1000));
         ball2.setVelocity(50, 50);
 
+        if (time % 10 == 1)
+            SoundFXPlayer.playBallCollisionSound();
+
+
         ball.draw();
         ball2.draw();
         rectangle1.draw();
