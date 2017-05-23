@@ -11,6 +11,7 @@ public class Rectangle {
     private Quadrilateral quadrilateral;
     private Position pos;
     private ShaderHandler shaderHandler;
+    private Velocity velocity;
 
     public Rectangle(float width, float height, ShaderHandler sh) {
         shaderHandler = sh;
@@ -23,6 +24,7 @@ public class Rectangle {
         quadrilateral = new Quadrilateral(rectVertice, sh);
 
         pos = new Position(0, 0);
+        velocity = new Velocity(0, 0);
     }
 
 
@@ -37,7 +39,19 @@ public class Rectangle {
     }
 
 
+    public Velocity getVelocity() {
+        return velocity;
+    }
+
+
+    public void setVelocity(float vx, float vy) {
+        velocity.x = vx;
+        velocity.y = vy;
+    }
+
     public void draw() {
+        pos.updatePosition(velocity, Utils.dt);
+
         float[] translationMatrix = new float[16];
         Matrix.setIdentityM(translationMatrix, 0);
         Matrix.translateM(translationMatrix, 0, pos.x, pos.y, 0);
