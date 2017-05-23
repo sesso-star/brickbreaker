@@ -19,6 +19,7 @@ import static java.lang.Math.sin;
 public class GameRenderer implements Renderer{
     Ball ball;
     Ball ball2;
+    Rectangle rectangle1;
     ShaderHandler shaderHandler;
 
     private final float[] mProjectionMatrix = new float[16];
@@ -29,6 +30,7 @@ public class GameRenderer implements Renderer{
         shaderHandler = new ShaderHandler();
         ball = new Ball(0.5f, shaderHandler);
         ball2 = new Ball(0.5f, shaderHandler);
+        rectangle1 = new Rectangle(2.0f, 0.2f, shaderHandler);
 
         Matrix.setLookAtM(mViewMatrix, 0,
                 0f, 0f, -3f,
@@ -48,6 +50,7 @@ public class GameRenderer implements Renderer{
 
         ball.draw();
         ball2.draw();
+        rectangle1.draw();
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
