@@ -74,7 +74,7 @@ public class SoundFXPlayer {
 
     static void playBallCollisionSound(Context context) {
         MyFXPlayer fxPlayer = new MyFXPlayer();
-        Uri soundUri = Uri.parse("android.resource://com.example.sessostar.brickbreaker/" + R.raw.ball_collision_sound);
+        Uri soundUri = Uri.parse("android.resource://com.example.sessostar.brickbreaker/" + R.raw.collision_sound);
         try {
             fxPlayer.setDataSource(context, soundUri);
         } catch (IOException e) {

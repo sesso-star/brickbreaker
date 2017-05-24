@@ -1,12 +1,17 @@
 package com.example.sessostar.brickbreaker;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.Shader;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
+import android.os.Build;
 import android.os.SystemClock;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -23,7 +28,7 @@ public class GameRenderer implements Renderer{
 
     Ball ball;
     Rectangle rectangle1, rectangle2, rectangle3, rectangle4;
-
+    RoomWall roomWall;
     ShaderHandler shaderHandler;
 
     private final float[] mProjectionMatrix = new float[16];
@@ -47,46 +52,33 @@ public class GameRenderer implements Renderer{
         shaderHandler.setViewMatrix(mViewMatrix);
 
 
-        ball = new Ball(0.5f, shaderHandler);
+        ball = new Ball(0.25f, shaderHandler);
         ball.setPos(4, 1);
-        ball.setVelocity(-50, 50);
-
-        rectangle1 = new Rectangle(0.2f, 2f, shaderHandler);
-        rectangle1.setPos(0f, 5f);
-
-        rectangle2 = new Rectangle(2f, 0.2f, shaderHandler);
-        rectangle2.setPos(5f, 10f);
-
-        rectangle3 = new Rectangle(0.2f, 2f, shaderHandler);
-        rectangle3.setPos(10f, 5f);
-
-        rectangle4 = new Rectangle(2f, 0.2f, shaderHandler);
-        rectangle4.setPos(5f, 0f);
+        ball.setVelocity(-75, 75);
     }
 
+
     public void onDrawFrame(GL10 unused) {
+        GLES20.glClearColor(.5f, .6f, 8f,1f);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        if (ball.checkColisionWith(rectangle1)) SoundFXPlayer.playBallCollisionSound(context);
-        if (ball.checkColisionWith(rectangle2)) SoundFXPlayer.playBallCollisionSound(context);
-        if (ball.checkColisionWith(rectangle3)) SoundFXPlayer.playBallCollisionSound(context);
-        if (ball.checkColisionWith(rectangle4)) SoundFXPlayer.playBallCollisionSound(context);
+        Rectangle[] walls = roomWall.getWalls();
+        for (Rectangle wall : walls)
+            if (ball.checkColisionWith(wall))
+                SoundFXPlayer.playBallCollisionSound(context);
 
 
         ball.draw();
-        rectangle1.draw();
-        rectangle2.draw();
-        rectangle3.draw();
-        rectangle4.draw();
+        roomWall.draw();
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
-        GLES20.glViewport(0, 0, width, height);
-
         float ratio = (float) width / height;
         Utils.ySize = Utils.xSize / ratio;
+        roomWall = new RoomWall(Utils.xSize, Utils.ySize, shaderHandler);
 
-        Matrix.frustumM(mProjectionMatrix, 0, 0, Utils.xSize, 0, Utils.ySize, 2.9f, 10);
+        GLES20.glViewport(0, 0, width, height);
+        Matrix.orthoM(mProjectionMatrix, 0, 0, Utils.xSize, 0, Utils.ySize, -2, 10);
         shaderHandler.setProjectionMatrix(mProjectionMatrix);
     }
 

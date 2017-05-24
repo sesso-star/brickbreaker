@@ -14,6 +14,11 @@ public class Rectangle {
     private Velocity velocity;
     private float width, height;
 
+
+    /**
+     * @param width is the width of the rectangle
+     * @param height is the height of the rectangle
+     * @param sh is the ShaderHandler which will draw this object */
     public Rectangle(float width, float height, ShaderHandler sh) {
         shaderHandler = sh;
         this.width = width;
@@ -50,17 +55,19 @@ public class Rectangle {
         velocity.y = vy;
     }
 
-
-    public float getWidth() {
+    float getWidth() {
         return width;
     }
 
-    public float getHeight() {
+    float getHeight() {
         return height;
     }
 
+    void setColor(float[] color) {
+        this.quadrilateral.setColor(color);
+    }
 
-    public void draw() {
+    void draw() {
         pos.updatePosition(velocity, Utils.dt);
         float[] translationMatrix = new float[16];
         Matrix.setIdentityM(translationMatrix, 0);
