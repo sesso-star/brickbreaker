@@ -11,9 +11,12 @@ public class Rectangle {
     private Quadrilateral quadrilateral;
     private Position pos;
     private ShaderHandler shaderHandler;
+    private float width, height;
 
     public Rectangle(float width, float height, ShaderHandler sh) {
         shaderHandler = sh;
+        this.width = width;
+        this.height = height;
 
         Position[] rectVertice = new Position[4];
         rectVertice[0] = new Position((-1) * (width / 2), (-1) * (height / 2));
@@ -25,9 +28,16 @@ public class Rectangle {
         pos = new Position(0, 0);
     }
 
-
     public Position getPos() {
         return pos;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
     }
 
 

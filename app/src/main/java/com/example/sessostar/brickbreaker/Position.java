@@ -4,12 +4,9 @@ package com.example.sessostar.brickbreaker;
  * Created by user on 21/05/17.
  */
 
-public class Position {
-    public float x, y;
-
+public class Position extends Vector2D {
     public Position(float x, float y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
     public void updatePosition(Velocity v, float dt) {

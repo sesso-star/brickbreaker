@@ -51,6 +51,8 @@ public class Quadrilateral {
     }
 
 
+
+
     public void draw() {
         int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
         shaderHandler.setPosition(COORDS_PER_VERTEX, vertexStride, vertexBuffer);

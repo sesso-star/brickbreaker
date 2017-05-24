@@ -18,9 +18,7 @@ import static java.lang.Math.sin;
 
 public class GameRenderer implements Renderer{
     Ball ball;
-    Ball ball2;
-
-    Rectangle rectangle1;
+    Rectangle rectangle1, rectangle2, rectangle3, rectangle4;
 
     ShaderHandler shaderHandler;
 
@@ -29,31 +27,45 @@ public class GameRenderer implements Renderer{
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        shaderHandler = new ShaderHandler();
-        ball = new Ball(0.5f, shaderHandler);
-        ball2 = new Ball(0.5f, shaderHandler);
-        rectangle1 = new Rectangle(2.0f, 0.2f, shaderHandler);
 
+        shaderHandler = new ShaderHandler();
         Matrix.setLookAtM(mViewMatrix, 0,
                 0f, 0f, -3f,
                 0f, 0f, 0f,
                 0f, 1f, 0f);
-
         shaderHandler.setViewMatrix(mViewMatrix);
+
+
+        ball = new Ball(0.5f, shaderHandler);
+        ball.setPos(4, 1);
+        ball.setVelocity(-50, 50);
+
+        rectangle1 = new Rectangle(0.2f, 2f, shaderHandler);
+        rectangle1.setPos(0f, 5f);
+
+        rectangle2 = new Rectangle(2f, 0.2f, shaderHandler);
+        rectangle2.setPos(5f, 10f);
+
+        rectangle3 = new Rectangle(0.2f, 2f, shaderHandler);
+        rectangle3.setPos(10f, 5f);
+
+        rectangle4 = new Rectangle(2f, 0.2f, shaderHandler);
+        rectangle4.setPos(5f, 0f);
     }
 
     public void onDrawFrame(GL10 unused) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        long time = SystemClock.uptimeMillis() % 6283;
-        ball.setPos((float)sin((float) 4 * time / 1000), 0);
-
-        ball2.setVelocity(50, 50);
-        rectangle1.setPos((float)sin((float) 4 * time / 1000), (float)sin((float) 4 * time / 1000));
+        ball.checkColisionWith(rectangle1);
+        ball.checkColisionWith(rectangle2);
+        ball.checkColisionWith(rectangle3);
+        ball.checkColisionWith(rectangle4);
 
         ball.draw();
-        ball2.draw();
         rectangle1.draw();
+        rectangle2.draw();
+        rectangle3.draw();
+        rectangle4.draw();
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {

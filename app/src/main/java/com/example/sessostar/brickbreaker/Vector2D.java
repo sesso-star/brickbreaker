@@ -16,7 +16,7 @@ public class Vector2D {
         return x * v.x + y * v.y;
     }
 
-    public float croos(Vector2D v) {
+    public float cross(Vector2D v) {
         return x * v.y - y * v.x;
     }
 
@@ -39,5 +39,9 @@ public class Vector2D {
     public float norm2() {
         float norm = this.dot(this);
         return norm * norm;
+    }
+
+    public Vector2D unit() {
+        return this.times(1 / this.norm());
     }
 }
