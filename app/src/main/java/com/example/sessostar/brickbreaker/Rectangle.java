@@ -12,9 +12,12 @@ public class Rectangle {
     private Position pos;
     private ShaderHandler shaderHandler;
     private Velocity velocity;
+    private float width, height;
 
     public Rectangle(float width, float height, ShaderHandler sh) {
         shaderHandler = sh;
+        this.width = width;
+        this.height = height;
 
         Position[] rectVertice = new Position[4];
         rectVertice[0] = new Position((-1) * (width / 2), (-1) * (height / 2));
@@ -27,11 +30,9 @@ public class Rectangle {
         velocity = new Velocity(0, 0);
     }
 
-
     public Position getPos() {
         return pos;
     }
-
 
     public void setPos(float x, float y) {
         pos.x = x;
@@ -49,9 +50,18 @@ public class Rectangle {
         velocity.y = vy;
     }
 
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+
     public void draw() {
         pos.updatePosition(velocity, Utils.dt);
-
         float[] translationMatrix = new float[16];
         Matrix.setIdentityM(translationMatrix, 0);
         Matrix.translateM(translationMatrix, 0, pos.x, pos.y, 0);
