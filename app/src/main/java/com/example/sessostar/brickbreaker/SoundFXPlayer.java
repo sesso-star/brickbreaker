@@ -14,6 +14,13 @@ public class SoundFXPlayer {
 
     private static class MyFXPlayer extends MediaPlayer {
 
+        /*
+        * song is not being played if state = 0
+        * song is being played     if state = 1
+        * song is paused           if state = 2
+        * */
+        private int state = 0;
+
         public MyFXPlayer() {
             super();
 
@@ -35,7 +42,34 @@ public class SoundFXPlayer {
 
     private static MediaPlayer gameSound;
 
-    static void prepareFXes(Context context) {
+    static void playGameSong(Context context) {
+        if (gameSound == null)
+            createGameSound(context);
+        else if (!gameSound.isPlaying())
+            gameSound.start();
+    }
+
+    private static void createGameSound(Context context) {
+        gameSound = new MediaPlayer();
+        Uri soundUri = Uri.parse("android.resource://com.example.sessostar.brickbreaker/" +
+                R.raw.main_song);
+        try {
+            gameSound.setDataSource(context, soundUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        gameSound.prepareAsync();
+        gameSound.setLooping(true);
+        gameSound.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+        });
+    }
+
+    static void pauseGameSong() {
+        gameSound.pause();
     }
 
     static void playBallCollisionSound(Context context) {

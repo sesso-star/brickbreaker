@@ -16,8 +16,22 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SoundFXPlayer.prepareFXes(this);
+        SoundFXPlayer.playGameSong(this);
         gameView = new GameView(this);
         setContentView(gameView);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SoundFXPlayer.pauseGameSong();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SoundFXPlayer.playGameSong(this);
     }
 }
