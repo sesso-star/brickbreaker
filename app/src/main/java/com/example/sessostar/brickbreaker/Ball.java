@@ -78,15 +78,28 @@ public class Ball {
         Position downColision   = intersects(ballUp, vt, bottomLeft, bottomRight.minus((bottomLeft)));
         Position rightColision  = intersects(ballLeft, vt, bottomRight, upperRight.minus((bottomRight)));
 
+        boolean cornerColision = false;
+        cornerColision = cornerColision || upperLeft.minus(pos).norm() < radius;
+        cornerColision = cornerColision || upperRight.minus(pos).norm() < radius;
+        cornerColision = cornerColision || bottomLeft.minus(pos).norm() < radius;
+        cornerColision = cornerColision || bottomRight.minus(pos).norm() < radius;
+
+
         if (upColision == null && leftColision == null &&
-                downColision == null && rightColision == null)
+                downColision == null && rightColision == null &&
+                !cornerColision)
             return false;
-        if (upColision != null || downColision != null) {
+
+
+        if (upColision != null || downColision != null)
+            velocity.y *= -1;
+        else if (leftColision != null || rightColision != null)
+            velocity.x *= -1;
+        else if (cornerColision) {
+            velocity.x *= -1;
             velocity.y *= -1;
         }
-        if (leftColision != null || rightColision != null) {
-            velocity.x *= -1;
-        }
+
         return true;
     }
 

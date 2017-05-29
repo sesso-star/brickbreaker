@@ -20,7 +20,7 @@ public class Circle {
     private int vertexCount;
     private int COORDS_PER_VERTEX = 3;
 
-    float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 1.0f};
+    float color[] = {0.76953125f, 0.22265625f, 0.63671875f, 1.0f};
 
     ShaderHandler shaderHandler;
 

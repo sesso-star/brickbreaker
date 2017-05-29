@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import java.util.LinkedList;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -27,8 +29,9 @@ public class GameRenderer implements Renderer{
     private Context context;
 
     Ball ball;
-    Rectangle rectangle1, rectangle2, rectangle3, rectangle4;
     RoomWall roomWall;
+    Paddle paddle;
+    BrickGrid brickGrid;
     ShaderHandler shaderHandler;
 
     private final float[] mProjectionMatrix = new float[16];
@@ -52,6 +55,9 @@ public class GameRenderer implements Renderer{
         shaderHandler.setViewMatrix(mViewMatrix);
 
 
+        paddle = new Paddle(2f, 0.2f, shaderHandler);
+        paddle.setPos(5f, 1f);
+
         ball = new Ball(0.25f, shaderHandler);
         ball.setPos(4, 1);
         ball.setVelocity(-75, 75);
@@ -67,7 +73,12 @@ public class GameRenderer implements Renderer{
             if (ball.checkColisionWith(wall))
                 SoundFXPlayer.playBallCollisionSound(context);
 
+        ball.checkColisionWith(paddle);
+        paddle.checkColisionWith(roomWall);
+        brickGrid.checkColisionsWith(ball);
 
+        brickGrid.drawBricks();
+        paddle.draw();
         ball.draw();
         roomWall.draw();
     }
@@ -76,10 +87,23 @@ public class GameRenderer implements Renderer{
         float ratio = (float) width / height;
         Utils.ySize = Utils.xSize / ratio;
         roomWall = new RoomWall(Utils.xSize, Utils.ySize, shaderHandler);
+        brickGrid = new BrickGrid(5, 3, shaderHandler);
 
         GLES20.glViewport(0, 0, width, height);
         Matrix.orthoM(mProjectionMatrix, 0, 0, Utils.xSize, 0, Utils.ySize, -2, 10);
         shaderHandler.setProjectionMatrix(mProjectionMatrix);
+    }
+
+    public void touchRight() {
+        paddle.setVelocity(70f, 0f);
+    }
+
+    public void touchLeft() {
+        paddle.setVelocity(-70f, 0f);
+    }
+
+    public void touchUp() {
+        paddle.setVelocity(0f, 0f);
     }
 
 

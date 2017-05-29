@@ -8,11 +8,11 @@ import android.opengl.Matrix;
 
 public class Rectangle {
 
-    private Quadrilateral quadrilateral;
-    private Position pos;
-    private ShaderHandler shaderHandler;
-    private Velocity velocity;
-    private float width, height;
+    protected Quadrilateral quadrilateral;
+    protected Position pos;
+    protected ShaderHandler shaderHandler;
+    protected Velocity velocity;
+    protected float width, height;
 
 
     /**
