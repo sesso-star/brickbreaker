@@ -19,6 +19,10 @@ public class Brick extends Rectangle {
         adjustColor();
     }
 
+    public void addDefense(int d) {
+        setDefense(d + defense);
+    }
+
     public int getDefense() {
         return defense;
     }

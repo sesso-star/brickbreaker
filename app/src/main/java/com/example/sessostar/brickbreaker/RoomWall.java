@@ -35,6 +35,16 @@ public class RoomWall {
         return walls;
     }
 
+
+    Boolean checkColisionsWith(Ball ball) {
+        Boolean collided = false;
+        for (Rectangle wall : walls) {
+            if (ball.checkColisionWith(wall))
+                collided = true;
+        }
+        return collided;
+    }
+
     /**
      * Draws room walls */
     void draw() {
