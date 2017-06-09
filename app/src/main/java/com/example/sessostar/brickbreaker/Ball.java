@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static java.lang.StrictMath.abs;
 
 
 /**
@@ -95,10 +96,23 @@ public class Ball {
             velocity.y *= -1;
         else if (leftColision != null || rightColision != null)
             velocity.x *= -1;
-        else if (cornerColision) {
-            velocity.x *= -1;
-            velocity.y *= -1;
+        else if (upperLeft.minus(pos).norm() < radius) {
+            velocity.x = -abs(velocity.x);
+            velocity.y = abs(velocity.y);
+        } else if (upperRight.minus(pos).norm() < radius) {
+            velocity.x = abs(velocity.x);
+            velocity.y = abs(velocity.y);
+        } else if (bottomLeft.minus(pos).norm() < radius) {
+            velocity.x = -abs(velocity.x);
+            velocity.y = -abs(velocity.y);
+        } else if (bottomRight.minus(pos).norm() < radius) {
+            velocity.x = abs(velocity.x);
+            velocity.y = -abs(velocity.y);
         }
+//        else if (cornerColision) {
+//            velocity.x *= -1;
+//            velocity.y *= -1;
+//        }
 
         return true;
     }

@@ -5,7 +5,15 @@ package com.example.sessostar.brickbreaker;
  */
 
 class Utils {
-    static final float dt = 0.001f;
     static final float xSize = 10f;
+    static float dt = 0.001f;
     static float ySize;
+
+    public static void stopTime() {
+        dt = 0;
+    }
+
+    public static void unStopTime() {
+        dt = 0.001f;
+    }
 }

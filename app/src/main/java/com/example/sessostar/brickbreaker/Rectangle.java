@@ -55,19 +55,19 @@ public class Rectangle {
         velocity.y = vy;
     }
 
-    float getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    float getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    void setColor(float[] color) {
+    public void setColor(float[] color) {
         this.quadrilateral.setColor(color);
     }
 
-    void draw() {
+    public void draw() {
         pos.updatePosition(velocity, Utils.dt);
         float[] translationMatrix = new float[16];
         Matrix.setIdentityM(translationMatrix, 0);

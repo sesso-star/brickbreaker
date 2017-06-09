@@ -12,7 +12,7 @@ public class BrickGrid {
 
     public BrickGrid(int nx, int ny, ShaderHandler sh) {
         shaderHandler = sh;
-        float offSetRatio = 0.2f;
+        float offSetRatio = 0.3f;
         float spacingRatio = 0.1f;
         float heightRatio = 0.3f;
         float brickWidth = (Utils.xSize - ((nx - 1) * spacingRatio + nx * offSetRatio) * (Utils.xSize / nx)) /  nx;
@@ -26,6 +26,7 @@ public class BrickGrid {
                 Brick brick = new Brick(brickWidth, 0.2f, shaderHandler);
                 brick.setPos(offSet + (brickWidth / 2) + i * (spacing + brickWidth),
                         Utils.ySize - (offSet + (brickHeight / 2) + j * (spacing + brickHeight)));
+                brick.setDefense(2);
                 brickList.add(brick);
             }
         }
@@ -33,8 +34,10 @@ public class BrickGrid {
 
     public void checkColisionsWith(Ball ball) {
         for (int i = 0; i < brickList.size(); i++) {
-            if (ball.checkColisionWith(brickList.get(i)))
-                brickList.remove(i);
+            if (ball.checkColisionWith(brickList.get(i))) {
+                if (brickList.get(i).hit())
+                    brickList.remove(i);
+            }
         }
     }
 

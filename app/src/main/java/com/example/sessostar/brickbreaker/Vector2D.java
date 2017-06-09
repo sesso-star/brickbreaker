@@ -1,5 +1,7 @@
 package com.example.sessostar.brickbreaker;
 
+import static java.lang.Math.sqrt;
+
 /**
  * Created by user on 23/05/17.
  */
@@ -33,12 +35,11 @@ public class Vector2D {
     }
 
     public float norm() {
-        return this.dot(this);
+        return (float)sqrt(this.dot(this));
     }
 
     public float norm2() {
-        float norm = this.dot(this);
-        return norm * norm;
+        return this.dot(this);
     }
 
     public Vector2D unit() {

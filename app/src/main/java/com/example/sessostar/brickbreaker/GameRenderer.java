@@ -11,7 +11,9 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 
@@ -33,6 +35,7 @@ public class GameRenderer implements Renderer{
     Paddle paddle;
     BrickGrid brickGrid;
     ShaderHandler shaderHandler;
+    MovingBrick movingBrick;
 
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
@@ -59,8 +62,11 @@ public class GameRenderer implements Renderer{
         paddle.setPos(5f, 1f);
 
         ball = new Ball(0.25f, shaderHandler);
-        ball.setPos(4, 1);
-        ball.setVelocity(-75, 75);
+        ball.setPos(4f, 4f);
+        ball.setVelocity(-75, -75);
+
+        movingBrick = new MovingBrick(2f, 0.2f, 4f, 0.05f, shaderHandler);
+        movingBrick.setPos(5f, 5f);
     }
 
 
@@ -74,6 +80,7 @@ public class GameRenderer implements Renderer{
                 SoundFXPlayer.playBallCollisionSound(context);
 
         ball.checkColisionWith(paddle);
+        ball.checkColisionWith(movingBrick);
         paddle.checkColisionWith(roomWall);
         brickGrid.checkColisionsWith(ball);
 
@@ -81,6 +88,7 @@ public class GameRenderer implements Renderer{
         paddle.draw();
         ball.draw();
         roomWall.draw();
+        movingBrick.draw();
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
