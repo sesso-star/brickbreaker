@@ -14,7 +14,8 @@ class GameLevel {
     private int difficulty;
     Ball ball;
     Paddle paddle;
-    MovingBrick movingBrick;
+
+    MovingBrickColumn movingBrickColumn;
     RoomWall roomWall;
 
     /**
@@ -35,8 +36,7 @@ class GameLevel {
         ball.setPos(4f, 4f);
         ball.setVelocity(-75, -75);
 
-        movingBrick = new MovingBrick(2f, 0.2f, 4f, 0.05f, sh);
-        movingBrick.setPos(5f, 5f);
+        movingBrickColumn = new MovingBrickColumn(5, shaderHandler);
 
         roomWall = new RoomWall(Utils.xSize, Utils.ySize, sh);
     }
@@ -45,10 +45,10 @@ class GameLevel {
         if (brickGrid.checkColisionsWith(ball))
             SoundFXPlayer.playBallCollisionSound(context);
 
-        if (ball.checkColisionWith(paddle))
+        if (movingBrickColumn.checkColisionsWith(ball))
             SoundFXPlayer.playBallCollisionSound(context);
 
-        if (ball.checkColisionWith(movingBrick))
+        if (ball.checkColisionWith(paddle))
             SoundFXPlayer.playBallCollisionSound(context);
 
         if (paddle.checkColisionWith(roomWall))
@@ -62,7 +62,7 @@ class GameLevel {
         brickGrid.drawBricks();
         ball.draw();
         paddle.draw();
-        movingBrick.draw();
+        movingBrickColumn.drawBricks();
         roomWall.draw();
     }
 

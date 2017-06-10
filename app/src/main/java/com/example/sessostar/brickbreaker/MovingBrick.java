@@ -1,6 +1,7 @@
 package com.example.sessostar.brickbreaker;
 
 import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import static java.lang.StrictMath.PI;
 
 /**
@@ -20,6 +21,17 @@ public class MovingBrick extends Brick {
 
         t = 0;
     }
+
+
+    public void setPhase(float t) {
+        int a = (int) (t / (2 * PI));
+        this.t = t - a;
+        /* we also need to reset position */
+        Position p = this.getPos();
+        p.x = p.x + (float) (amp * sin(t / period));
+        this.setPos(p.x, p.y);
+    }
+
 
     public void draw() {
         setVelocity((float) cos(t / period) * amp / period, 0f);
