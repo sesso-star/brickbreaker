@@ -61,4 +61,8 @@ public class MovingBrickColumn {
         }
     }
 
+    public boolean isEmpty() {
+        return brickList.isEmpty();
+    }
+
 }

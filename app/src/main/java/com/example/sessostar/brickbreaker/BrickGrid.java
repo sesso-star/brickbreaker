@@ -66,4 +66,8 @@ class BrickGrid {
         }
     }
 
+    boolean isEmpty() {
+        return brickList.isEmpty();
+    }
+
 }
