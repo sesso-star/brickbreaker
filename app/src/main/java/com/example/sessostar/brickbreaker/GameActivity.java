@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.SoundEffectConstants;
@@ -61,8 +63,14 @@ public class GameActivity extends Activity {
         mTextView.setVisibility(View.INVISIBLE);
     }
 
-    public void setTextViewText(String text) {
-        mTextView.setText(text);
-        mTextView.setVisibility(View.VISIBLE);
+    public void setTextViewText(final String text) {
+        /* Force it to run on UI thread */
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                mTextView.setText(text);
+                mTextView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

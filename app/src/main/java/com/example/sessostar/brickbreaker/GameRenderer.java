@@ -8,6 +8,8 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Display;
@@ -62,12 +64,18 @@ public class GameRenderer implements Renderer{
 
         level.checkColisions();
         level.draw();
+
+        if (level.checkBallExited()) {
+            Utils.stopTime();
+            final GameActivity ga = (GameActivity) context;
+            ga.setTextViewText(ga.getString(R.string.game_over_message));
+        }
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
         float ratio = (float) width / height;
         Utils.ySize = Utils.xSize / ratio;
-        level = new GameLevel(this.context, shaderHandler, 5);
+        level = new GameLevel(this.context, shaderHandler, 1);
 
         GLES20.glViewport(0, 0, width, height);
         Matrix.orthoM(mProjectionMatrix, 0, 0, Utils.xSize, 0, Utils.ySize, -2, 10);

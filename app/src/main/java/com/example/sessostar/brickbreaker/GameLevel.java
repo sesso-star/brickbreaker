@@ -84,4 +84,7 @@ class GameLevel {
         paddle.setVelocity(0f, 0f);
     }
 
+    Boolean checkBallExited () {
+        return ball.getPos().y < 0;
+    }
 }
