@@ -67,7 +67,7 @@ public class GameRenderer implements Renderer{
     public void onSurfaceChanged(GL10 unused, int width, int height) {
         float ratio = (float) width / height;
         Utils.ySize = Utils.xSize / ratio;
-        level = new GameLevel(this.context, shaderHandler, 10);
+        level = new GameLevel(this.context, shaderHandler, 5);
 
         GLES20.glViewport(0, 0, width, height);
         Matrix.orthoM(mProjectionMatrix, 0, 0, Utils.xSize, 0, Utils.ySize, -2, 10);

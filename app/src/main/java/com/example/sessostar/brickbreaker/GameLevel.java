@@ -8,35 +8,41 @@ import android.content.Context;
 
 class GameLevel {
 
-    Context context;
+    private Context context;
     private BrickGrid brickGrid;
     private ShaderHandler shaderHandler;
     private int difficulty;
-    Ball ball;
-    Paddle paddle;
+    private Ball ball;
+    private Paddle paddle;
+    private float paddleSpeed;
 
-    MovingBrickColumn movingBrickColumn;
-    RoomWall roomWall;
+    private MovingBrickColumn movingBrickColumn;
+    private RoomWall roomWall;
 
     /**
      * @param sh is the ShaderHandler
-     * @param difficulty determines how hard this game level is
+     * @param difficulty determines how hard this game level is.
+     *                   It should be a number between 0 and 9.
      */
     GameLevel(Context context, ShaderHandler sh, int difficulty) {
         this.context = context;
         this.shaderHandler = sh;
         this.difficulty = difficulty;
 
-        this.brickGrid = new BrickGrid (10, 6, sh);
-
+        paddleSpeed = 50 * (float) difficulty / 9 + 70;
         paddle = new Paddle(2f, 0.2f, sh);
         paddle.setPos(5f, 1f);
 
+        float ballSpeed = (75 / 9) * (float) difficulty + 75;
         ball = new Ball(0.25f, sh);
         ball.setPos(4f, 4f);
-        ball.setVelocity(-75, -75);
+        ball.setVelocity(ballSpeed, ballSpeed);
 
-        movingBrickColumn = new MovingBrickColumn(5, shaderHandler);
+        int nx = (int) (6 * (float) difficulty / 9 + 4);
+        int ny = (int) (4 * (float) difficulty / 9 + 2);
+        int mb = (int) (5 * (float) difficulty / 9 + 0);
+        this.brickGrid = new BrickGrid (nx, ny, sh);
+        movingBrickColumn = new MovingBrickColumn(mb, shaderHandler);
 
         roomWall = new RoomWall(Utils.xSize, Utils.ySize, sh);
     }
@@ -67,11 +73,11 @@ class GameLevel {
     }
 
     void movePaddleRight () {
-        paddle.setVelocity(70f, 0f);
+        paddle.setVelocity(paddleSpeed, 0f);
     }
 
     void movePaddleLeft () {
-        paddle.setVelocity(-70f, 0f);
+        paddle.setVelocity(-paddleSpeed, 0f);
     }
 
     void stopPaddle () {
