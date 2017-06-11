@@ -16,12 +16,12 @@ public class RoomWall {
      * @param sh is the ShaderHandler that will draw the walls */
     RoomWall(float roomWidth, float roomHeight, ShaderHandler sh) {
         walls = new Rectangle[3];
-//        walls[0] = new Rectangle(roomWidth, wallThickness, sh);
+//        walls[3] = new Rectangle(roomWidth, wallThickness, sh);
         walls[1] = new Rectangle(roomWidth, wallThickness, sh);
         walls[0] = new Rectangle(wallThickness, roomHeight, sh);
         walls[2] = new Rectangle(wallThickness, roomHeight, sh);
 
-//        walls[0].setPos(roomWidth / 2, wallThickness / 2);
+//        walls[3].setPos(roomWidth / 2, wallThickness / 2);
         walls[1].setPos(roomWidth / 2, roomHeight - wallThickness / 2);
         walls[0].setPos(roomWidth - wallThickness / 2, roomHeight / 2);
         walls[2].setPos(wallThickness / 2, roomHeight / 2);

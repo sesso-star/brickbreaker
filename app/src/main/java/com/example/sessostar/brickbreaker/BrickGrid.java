@@ -37,13 +37,10 @@ class BrickGrid {
 
     void hardenRandomBricks(int n) {
         int nBricks = brickList.size();
-        if (nBricks < n)
-            return;
         Random rand = new Random();
         while (nBricks > 0) {
-            int randomIndex = rand.nextInt(nBricks);
+            int randomIndex = rand.nextInt(brickList.size());
             brickList.get(randomIndex).addDefense(1);
-            Collections.swap(brickList, randomIndex, nBricks - 1);
             nBricks--;
         }
     }

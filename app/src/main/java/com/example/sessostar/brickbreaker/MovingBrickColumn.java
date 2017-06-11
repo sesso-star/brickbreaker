@@ -23,14 +23,13 @@ public class MovingBrickColumn {
         float brickWidth = (Utils.xSize - 2 * lateralMargins) * .2f;
         float brickHeight = brickWidth * heightRatio;
         float amplitude = (Utils.xSize - lateralMargins) / 2 - brickWidth / 2;
-        float topOffset = 0.25f;
+        float topOffset = 0.3f;
         float heightSpace = .5f * brickHeight;
         Random rand = new Random();
 
         brickList = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            float period = 0.05f + (float) (rand.nextInt(11) / 500 - 0.01f);
-            Log.d("MovingBrickColumn", "period: " + period + "\n");
+//            float period = 0.05f + (float) (rand.nextInt(11) / 500 - 0.01f);
             MovingBrick b = new MovingBrick(brickWidth, brickHeight, amplitude,
                     .05f, shaderHandler);
             b.setDefense(5);

@@ -14,24 +14,24 @@ public class BrickTest {
     @Test
     public void Defense_onAdd_ShouldGrow() throws Exception {
         Brick brick = new Brick(10f, 10f, null);
-        brick.setDefense(10);
-        brick.addDefense(10);
-        assertThat(brick.getDefense(), is(20));
+        brick.setDefense(1);
+        brick.addDefense(4);
+        assertThat(brick.getDefense(), is(5));
     }
 
 
     @Test
     public void Defense_onHit_ShouldDecrease() throws Exception {
         Brick brick = new Brick(10f, 10f, null);
-        brick.setDefense(10);
+        brick.setDefense(5);
         brick.hit();
-        assertThat(brick.getDefense(), is(9));
+        assertThat(brick.getDefense(), is(4));
     }
 
 
     @Test
     public void Defense_onHitAllDefense_ShouldBeZero() throws Exception {
-        int defense = 10;
+        int defense = 5;
         Brick brick = new Brick(10f, 10f, null);
         brick.setDefense(defense);
         for (int i = 0; i < defense - 1; i++)
@@ -39,6 +39,13 @@ public class BrickTest {
         boolean dieded = brick.hit();
         assertThat(brick.getDefense(), is(0));
         assertThat(dieded, is(true));
+    }
+
+    @Test
+    public void Defense_CantBeHigherThanFive() throws Exception {
+        Brick brick = new Brick(10f, 10f, null);
+        brick.setDefense(999);
+        assertThat(brick.getDefense(), is(5));
     }
 
 }

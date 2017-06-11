@@ -38,10 +38,12 @@ class GameLevel {
         ball.setPos(4f, 4f);
         ball.setVelocity(ballSpeed, ballSpeed);
 
-        int nx = (int) (6 * (float) difficulty / 9 + 4);
+        int nx = (int) (3 * (float) difficulty / 9 + 4);
         int ny = (int) (4 * (float) difficulty / 9 + 2);
         int mb = (int) (5 * (float) difficulty / 9 + 0);
+        int eh = nx * ny * difficulty;
         this.brickGrid = new BrickGrid (nx, ny, sh);
+        this.brickGrid.hardenRandomBricks(eh);
         movingBrickColumn = new MovingBrickColumn(mb, shaderHandler);
 
         roomWall = new RoomWall(Utils.xSize, Utils.ySize, sh);
