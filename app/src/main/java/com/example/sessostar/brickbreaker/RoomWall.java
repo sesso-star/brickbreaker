@@ -21,10 +21,10 @@ public class RoomWall {
         walls[0] = new Rectangle(wallThickness, roomHeight, sh);
         walls[2] = new Rectangle(wallThickness, roomHeight, sh);
 
-//        walls[0].setPos(Utils.xSize / 2, wallThickness / 2);
-        walls[1].setPos(Utils.xSize / 2, Utils.ySize - wallThickness / 2);
-        walls[0].setPos(Utils.xSize - wallThickness / 2, Utils.ySize / 2);
-        walls[2].setPos(wallThickness / 2, Utils.ySize / 2);
+//        walls[0].setPos(roomWidth / 2, wallThickness / 2);
+        walls[1].setPos(roomWidth / 2, roomHeight - wallThickness / 2);
+        walls[0].setPos(roomWidth - wallThickness / 2, roomHeight / 2);
+        walls[2].setPos(wallThickness / 2, roomHeight / 2);
 
         for (Rectangle wall : walls)
             wall.setColor(wallColor);

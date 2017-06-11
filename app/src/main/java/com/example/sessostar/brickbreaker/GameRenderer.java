@@ -94,7 +94,5 @@ public class GameRenderer implements Renderer{
         level.stopPaddle ();
     }
 
-
-
 }
 
