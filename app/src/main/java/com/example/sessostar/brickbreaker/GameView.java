@@ -21,6 +21,7 @@ public class GameView extends GLSurfaceView {
 
         gameActivity = (GameActivity) context;
         setEGLContextClientVersion(2);
+
         gameRenderer = new GameRenderer(context);
         setRenderer(gameRenderer);
 //        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
@@ -40,6 +41,7 @@ public class GameView extends GLSurfaceView {
                 if (gamePaused) {
                     gameActivity.hideTextView();
                     Utils.unStopTime();
+                    gamePaused = false;
                 }
 
                 if (x < getWidth() / 2) {
@@ -55,5 +57,9 @@ public class GameView extends GLSurfaceView {
         }
 
         return true;
+    }
+
+    public void startLevel(int difficulty) {
+
     }
 }

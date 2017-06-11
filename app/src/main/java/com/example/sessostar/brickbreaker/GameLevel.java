@@ -72,6 +72,10 @@ class GameLevel {
         roomWall.draw();
     }
 
+    public boolean isOver() {
+        return brickGrid.isEmpty() && movingBrickColumn.isEmpty();
+    }
+
     void movePaddleRight () {
         paddle.setVelocity(paddleSpeed, 0f);
     }

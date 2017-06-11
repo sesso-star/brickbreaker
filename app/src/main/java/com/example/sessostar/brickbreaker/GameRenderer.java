@@ -34,6 +34,7 @@ public class GameRenderer implements Renderer{
 
     GameLevel level;
     ShaderHandler shaderHandler;
+    private int levelDifficulty;
 
 
     private final float[] mProjectionMatrix = new float[16];
@@ -44,7 +45,10 @@ public class GameRenderer implements Renderer{
      */
     GameRenderer(Context context) {
         this.context = context;
+        levelDifficulty = 0;
     }
+
+
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -63,6 +67,15 @@ public class GameRenderer implements Renderer{
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         level.checkColisions();
+
+        if (level.isOver()) {
+            Utils.stopTime();
+            GameActivity gameActivity = (GameActivity) context;
+            levelDifficulty++;
+            gameActivity.setTextViewText("Level " + levelDifficulty);
+            level = new GameLevel(this.context, shaderHandler, levelDifficulty);
+        }
+
         level.draw();
 
         if (level.checkBallExited()) {
@@ -75,7 +88,7 @@ public class GameRenderer implements Renderer{
     public void onSurfaceChanged(GL10 unused, int width, int height) {
         float ratio = (float) width / height;
         Utils.ySize = Utils.xSize / ratio;
-        level = new GameLevel(this.context, shaderHandler, 1);
+        level = new GameLevel(this.context, shaderHandler, levelDifficulty);
 
         GLES20.glViewport(0, 0, width, height);
         Matrix.orthoM(mProjectionMatrix, 0, 0, Utils.xSize, 0, Utils.ySize, -2, 10);

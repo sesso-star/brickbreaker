@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -20,7 +21,7 @@ import android.widget.TextView;
  */
 
 public class GameActivity extends Activity {
-    private GLSurfaceView gameView;
+    private GameView gameView;
     private TextView mTextView;
 
     @Override
@@ -37,6 +38,7 @@ public class GameActivity extends Activity {
         setContentView(gameView);
 
         mTextView = new TextView(this);
+        mTextView.setId(1);
         mTextView.setText("Touch to start");
         mTextView.setTextColor(Color.WHITE);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
@@ -60,7 +62,8 @@ public class GameActivity extends Activity {
     }
 
     public void hideTextView() {
-        mTextView.setVisibility(View.INVISIBLE);
+//        ((ViewGroup) mTextView.getParent()).removeView(mTextView);
+        mTextView.setVisibility(View.GONE);
     }
 
     public void setTextViewText(final String text) {
@@ -72,5 +75,7 @@ public class GameActivity extends Activity {
                 mTextView.setVisibility(View.VISIBLE);
             }
         });
+        gameView.gamePaused = true;
     }
+
 }
