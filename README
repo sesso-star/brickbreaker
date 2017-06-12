@@ -1,0 +1,11 @@
+EP2 MAC0463 - Computação Móvel
+Brickbreaker, por Bruno Sesso e Gustavo Estrela
+
+Features implementadas:
+[Fácil] - Diferentes tijolos.
+[Fácil] - Áudio.
+[Médio] - Blocos móveis (aparecem apenas a partir do nível 3).
+[Difícil] - Níveis aleatórios. A "vida" dos tijolos é aleatório, assim
+como o movimento dos blocos móveis.
+
+
