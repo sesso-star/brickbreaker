@@ -39,10 +39,12 @@ public class GameActivity extends Activity {
 
         mTextView = new TextView(this);
         mTextView.setId(1);
-        mTextView.setText("Touch to start");
+        mTextView.setText(R.string.touch_to_start);
         mTextView.setTextColor(Color.WHITE);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         addContentView(mTextView, params);
     }
@@ -51,6 +53,7 @@ public class GameActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
+        Utils.stopTime();
         SoundFXPlayer.pauseGameSong();
     }
 
@@ -58,6 +61,7 @@ public class GameActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+        Utils.unStopTime();
         SoundFXPlayer.playGameSong(this);
     }
 
@@ -75,7 +79,6 @@ public class GameActivity extends Activity {
                 mTextView.setVisibility(View.VISIBLE);
             }
         });
-        gameView.gamePaused = true;
     }
 
 }

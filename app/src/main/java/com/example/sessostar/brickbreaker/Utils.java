@@ -8,6 +8,7 @@ class Utils {
     static final float xSize = 10f;
     static float dt = 0.001f;
     static float ySize;
+    static boolean inGame = false;
 
     public static void stopTime() {
         dt = 0;

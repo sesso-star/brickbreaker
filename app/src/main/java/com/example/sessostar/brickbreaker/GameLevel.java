@@ -35,7 +35,7 @@ class GameLevel {
 
         float ballSpeed = (75 / 9) * (float) difficulty + 75;
         ball = new Ball(0.25f, sh);
-        ball.setPos(4f, 4f);
+        ball.setPos(5f, 1.36f);
         ball.setVelocity(ballSpeed, ballSpeed);
 
         int nx = (int) (3 * (float) difficulty / 9 + 4);

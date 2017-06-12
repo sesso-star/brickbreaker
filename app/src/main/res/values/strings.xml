@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BrickBreaker</string>
-    <string name="game_over_message">You Lost!</string>
+    <string name="game_over_message">You Lost! Touch to Restart</string>
+    <string name="touch_to_start">Touch to start</string>
 </resources>

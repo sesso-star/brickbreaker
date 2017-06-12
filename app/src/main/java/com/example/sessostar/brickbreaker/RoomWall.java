@@ -7,7 +7,7 @@ package com.example.sessostar.brickbreaker;
 public class RoomWall {
     private Rectangle[] walls;
     private final float wallThickness = .2f;
-    private final float wallColor[] = {.3f, .4f, 0.6f, 1.0f};
+    private final float wallColor[] = {.1f, .4f, .7f, 1f};
 
 
     /**

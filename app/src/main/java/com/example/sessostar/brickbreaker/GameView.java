@@ -11,12 +11,11 @@ import android.view.MotionEvent;
 public class GameView extends GLSurfaceView {
     private final GameRenderer gameRenderer;
     private final GameActivity gameActivity;
-    boolean gamePaused;
 
     public GameView(Context context) {
         super(context);
 
-        gamePaused = true;
+        Utils.inGame = false;
         Utils.stopTime();
 
         gameActivity = (GameActivity) context;
@@ -38,10 +37,10 @@ public class GameView extends GLSurfaceView {
 
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (gamePaused) {
+                if (!Utils.inGame) {
                     gameActivity.hideTextView();
                     Utils.unStopTime();
-                    gamePaused = false;
+                    Utils.inGame = true;
                 }
 
                 if (x < getWidth() / 2) {
